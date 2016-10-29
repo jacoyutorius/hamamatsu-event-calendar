@@ -5,6 +5,9 @@ require "open-uri"
 module Hamamatsu
   module Event
     class Calendar
+
+    	@@base_url = "http://www.city.hamamatsu.shizuoka.jp"
+
   		def crawl
   			list = []
   			page = 1
@@ -24,7 +27,7 @@ module Hamamatsu
   					break if listpage.count <= 0
 
 		  			list << listpage.map do |r|
-		  				{title: r.text, name: r.css("a").text, url: r.css("a")[0][:href] }
+		  				{title: r.text.gsub(/\s/, ""), name: r.css("a").text.gsub(/\s/, ""), url: "#{@@base_url}#{r.css("a")[0][:href]}"  }
 		  			end
 
 		  			page += 1
@@ -37,7 +40,7 @@ module Hamamatsu
 
   		private 
   			def target_url year=2016,month=10,page=1
-  				"http://www.city.hamamatsu.shizuoka.jp/cgi-bin/event_cal/cal_month.cgi?year=#{year}&month=#{month}&page=#{page}"
+  				"#{@@base_url}/cgi-bin/event_cal/cal_month.cgi?year=#{year}&month=#{month}&page=#{page}"
   			end
     end
   end
