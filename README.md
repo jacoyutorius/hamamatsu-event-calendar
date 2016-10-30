@@ -27,3 +27,18 @@ require "hamamatsu/event/calendar"
 client= Hamamatsu::Event::Calendar.new
 client.crawl
 ```
+
+## Todo
+
+- 月末だったら来月のデータを取得するようにしたい
+
+```ruby
+today = Date.today
+month = [30,31].include?(today.day) ? 1 : today.day
+if [30,31].include?(today.day) 
+  year = today.year
+  month = today.month + 1
+else
+
+end
+```
