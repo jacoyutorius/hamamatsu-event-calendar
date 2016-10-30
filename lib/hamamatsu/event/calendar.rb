@@ -16,7 +16,12 @@ module Hamamatsu
   				while(true) do
             break if page > 50
 
-  					url = target_url(Time.now.year, month, page)
+            today = Date.today
+            if [30,31].include?(today.day) 
+              today = today.next_month
+            end
+
+  					url = target_url(today.year, today.month, page)
   					charset = nil
 		  			html = open(url) do |f|
 		  				charset = f.charset
